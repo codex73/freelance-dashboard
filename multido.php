@@ -1,5 +1,6 @@
 <?php
 session_start();
+//Add your database settings here
 mysql_connect('localhost','localuser','userlocal');
 mysql_select_db('multido') or die(mysql_error());
 
@@ -124,7 +125,7 @@ OOO;
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Multido</title>
+    <title>Freelance Dashboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
