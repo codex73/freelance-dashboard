@@ -17,7 +17,7 @@ Project is built using PHP,MYSQL and Twitter Bootstrap Framework
 Not much work has been place yet on this, so it's very much a work in progress. If you'd like to help, please do. 
 I'll like to see what we could do together. Simplistic, Minimal and Easy.
 
-Screenshot
+The Screenshot
 -----------
 
 ![Alt text](https://github.com/codex73/freelance-dashboard/raw/master/freelance-dashboard1.png "Screenshot")
