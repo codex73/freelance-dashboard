@@ -1,4 +1,9 @@
 <?php
+/**
+ * @package Freelance Dashboard
+ * @version 1
+ * @author Francis Suarez [@codex73]
+ */
 session_start();
 //Add your database settings here
 mysql_connect('localhost','localuser','userlocal');
@@ -220,6 +225,7 @@ OOO;
             <h1 class="bigger"><?= board_health($prj); ?></h1>
             <hr>
             <h4>Projects</h4>
+            <!-- Add links to the boards here -->
             <p style="color: #ccc;"><a href="?uid=1&prj=1">Chris Johnson</a></p>
             <p style="color: #ccc;"><a href="?uid=1&prj=2">Luxury Yachts</a></p>
             <p style="color: #ccc;"><a href="?uid=1&prj=3">Airtoo</a></p>
@@ -227,23 +233,19 @@ OOO;
             <hr>
             <h4>Switchboard</h4>
             <a href="#" id="trigger_add" class="btn btn-mini" style="margin-bottom:3px;">Add a box</a>
+            <!--buttons Not in use yet -->
             <a href="?uid=1&prj=3" class="btn btn-mini" style="margin-bottom:3px;">Share this board</a>
             <a href="?uid=1&prj=3" class="btn btn-mini" style="margin-bottom:3px;">Permissions</a>
-          </div>
-        
+          </div>        
           <div class="span10" id="board_content">
             <div class="topper" style="background-color: white;">
               <h1>Freelance Dashboard</h1>
             </div>
-<html5></html5>
             <h3 style="margin-left: 20px;"><?php echo $_SESSION['bname']; ?></h3>
             <br/>
             <?php out_boxes($uid,$prj); ?>
           </div>          
-        </div>
-     
-      <!-- Example row of columns -->
-      
+        </div>      
     </div> <!-- /container -->
 
     <!-- Le javascript
