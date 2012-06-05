@@ -20,7 +20,7 @@ I'll like to see what we could do together. Simplistic, Minimal and Easy.
 Screenshot
 -----------
 
-![Alt text](/freelance-dashboard1.png "Screenshot")
+![Alt text](/codex73/freelance-dashboard/freelance-dashboard1.png "Screenshot")
 
 Installation
 -----------
