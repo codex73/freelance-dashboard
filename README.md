@@ -34,6 +34,16 @@ Things that could make this better:
 * Boards Management -> add boards(projects), rename boards, delete boards.
 * Boards Collaboration -> sharing - permission for other users to boards and/or boxes within.
 
+Usage
+-----------
+
+e.g.
+http://yourhost/projectfolder/multido.php?uid=1&prj=3
+
+http://yourhost/projectfolder/multido.php?uid=1&prj=board_number_here
+
+You could create multiple users permissions on table named "box_perm". The members table is not currently used or integrated, it could be empty.
+
 How to Contribute
 ------------
 
