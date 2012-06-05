@@ -19,6 +19,7 @@ $thequery = mysql_query("select bname from boards where bid = '".$prj."';");
 $thequery_rst = @mysql_result($thequery,0);
 $_SESSION['bname'] = (empty($thequery_rst) ? 'undefined' : $thequery_rst);
 
+//Displays Big Number Count - Tasks on Board Still Active
 function board_health($prj,$status=1){
   $query = "select box.rname,count(box_cont.cid) from box join box_cont on box.id = box_cont.fkid and box.fbid = '".$prj."' and box_cont.status = '".$status."' group by box.id;";
   $result = mysql_query($query);
@@ -28,6 +29,15 @@ function board_health($prj,$status=1){
   }
   if($the_count==0){$the_count = 0;}
   return $the_count;
+}
+
+//Fetches Boards Names & ID's for Menu
+function fetch_boards(){
+  $query = "select * from boards"; 
+  $result = mysql_query($query);
+  while($row = mysql_fetch_assoc($result)){
+    echo '<a href="?uid=1&prj='.$row['bid'].'">'.$row['bname'].'</a><br/>';
+  }
 }
 
 function out_boxes($uid,$prj){
@@ -219,23 +229,19 @@ OOO;
     <br/>
     <div class="container">
         <div class="row">
-          <div class="span2" style="text-align: center">
+          <div class="span2" style="">
             <img src="img/donald.png" alt="">
             <hr>
             <h1 class="bigger"><?= board_health($prj); ?></h1>
             <hr>
-            <h4>Projects</h4>
             <!-- Add links to the boards here -->
-            <p style="color: #ccc;"><a href="?uid=1&prj=1">Chris Johnson</a></p>
-            <p style="color: #ccc;"><a href="?uid=1&prj=2">Luxury Yachts</a></p>
-            <p style="color: #ccc;"><a href="?uid=1&prj=3">Airtoo</a></p>
-            <p style="color: #ccc;"><a href="?uid=1&prj=4">Rebajar.com</a></p>
+            <?php fetch_boards(); ?>
             <hr>
-            <h4>Switchboard</h4>
-            <a href="#" id="trigger_add" class="btn btn-mini" style="margin-bottom:3px;">Add a box</a>
+            <a href="#" id="trigger_add" class="btn btn-mini" style="margin-bottom:3px;">Add Box</a><br/>
+            <a href="#" id="trigger_add_box" class="btn btn-mini" style="margin-bottom:3px;">Add Board</a><br/>
             <!--buttons Not in use yet -->
-            <a href="?uid=1&prj=3" class="btn btn-mini" style="margin-bottom:3px;">Share this board</a>
-            <a href="?uid=1&prj=3" class="btn btn-mini" style="margin-bottom:3px;">Permissions</a>
+            <a href="?uid=1&prj=3" class="btn btn-mini" style="margin-bottom:3px;">Share this board</a><br/>
+            <a href="?uid=1&prj=3" class="btn btn-mini" style="margin-bottom:3px;">Permissions</a><br/>
           </div>        
           <div class="span10" id="board_content">
             <div class="topper" style="background-color: white;">
@@ -273,30 +279,48 @@ $(function(){
 
   var overlay_txt =
   '<div id="overlay"></div><div id="formed">'+
-  '<h2>Who\'s working on this?</h2>'+
-  '<input type="text" style="width:80%" style="float: right;"> '+
+  '<h2>Give the box a name</h2>'+
+  '<input type="text" name="new_box" style="width:80%" style="float: right;"> '+
   '<button class="btn add_con" style="float: right;">Save</button></div>';
 
-  $(overlay_txt).appendTo(document.body);
+  var overlay_txt2 =
+  '<div id="overlay"></div><div id="formed">'+
+  '<h2>Give the board a name</h2>'+
+  '<input type="text" name="new_board" style="width:80%" style="float: right;"> '+
+  '<button class="btn add_con" style="float: right;">Save</button></div>';  
 
+  //Add Box
   $("#trigger_add").on('click',function(event){
+    $(overlay_txt).appendTo(document.body);
     $("#overlay,#formed").show();
     event.preventDefault();
   });
 
-  $("#overlay").on('click',function(){
+  $("body").on('click','#overlay',function(){
+    $("#overlay,#formed").hide();
+  });
+
+  //Add Board
+  $("#trigger_add_box").on('click',function(event){
+    $(overlay_txt2).appendTo(document.body);
+    $("#overlay,#formed").show();
+    event.preventDefault();
+  });
+
+  $("body").on('click','#overlay',function(){
     $("#overlay,#formed").hide();
   });
 
   //Adds New Box To Board
-  $("#formed").on('click','.add_con',function(){
-    var new_entry = $(this).prev().val(),action = 'new_asset';
+  $("body").on('click','.add_con',function(){
+    var new_entry = $(this).prev().val(),action = 'new_asset',
+        typerec = $(this).prev().attr('name');
 
     $.ajax({
           type:'post',
           url: 'posts_in.php',
           dataType: "json",
-          data: { action: action, content: new_entry, prj: prj, uid: uid},
+          data: { action: action, content: new_entry, prj: prj, uid: uid, typerec: typerec},
           success: function(data){
               var action = data[0],cid= data[1], content = data[2];
               var box_frame = 
@@ -318,7 +342,9 @@ $(function(){
                 '</tr>'+
                 '</tbody>'+
               '</table>';
-              $("#board_content").append(box_frame);
+              if(typerec=='new_box'){
+                $("#board_content").append(box_frame);  
+              }              
           }
       });
 

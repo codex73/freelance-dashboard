@@ -24,9 +24,17 @@ $altstatus = trim(strip_tags($_POST['altstatus']));
 $content = trim(strip_tags($_POST['content'])); 
 $prj = trim(strip_tags($_POST['prj']));
 $uid = trim(strip_tags($_POST['uid']));
+$typerec = trim(strip_tags($_POST['typerec']));
+
+//New Board
+if($action=='new_asset'&&$typerec=='new_board'){
+	$query = "INSERT INTO boards (bid,bname) values (null,'".$content."');";
+	$result = mysql_query($query);
+	$cid = mysql_insert_id();
+}
 
 //New Box
-if($action=='new_asset'){
+if($action=='new_asset'&&$typerec=='new_box'){
 	$query = "INSERT INTO box (rname,bdate,fbid) values ('".$content."',NOW(),'".$prj."');";
 	$result = mysql_query($query);
 	$cid = mysql_insert_id();

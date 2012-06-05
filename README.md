@@ -53,7 +53,7 @@ Things that could make this better:
 ------------
 
 * A User System -> sign up module.
-* Boards Management -> add boards(projects), rename boards, delete boards.
+* Boards Management -> rename boards, delete boards.
 * Boards Collaboration -> sharing - permission for other users to boards and/or boxes within.
 
 Stuff it Needs
