@@ -1,20 +1,19 @@
-freelance-dashboard
+Freelance Dashboard
 ===================
 
-Freelance Dashboard was created with the goal of providing a minimal grid like view to help in tracking project tasks, assignments and progress.
+Created with the goal of providing a minimal grid like view to help in tracking project tasks, assignments and progress.
 
-There are many project management tools available which have tons of features, they are good and when used in teams work great. Neverless, I found that these project management tools took much time to setup, manage and sometimes could be confusing.
+There are many project management tools available which have tons of features, they are good and when used in teams work great. Neverless, I found that these project management tools took much time to setup, too many features,manage and sometimes could be confusing.
 
-I started coding what I believe could be a simple one page dashboard where we could 
-easily keep track of projects.
+I started working on something on a one page dashboard where keeping track of projects was it's essence.
 
-As of now, the one page "multido.php" is able to manage multiple grids(boards = projects), different uri user id's, 
-add boxes(project lists, assignments, task groups), add tasks(box entries), delete boxes, change statuses of box entries.
+As of now, one page "multido.php" is able to manage multiple grids(boards = projects), different uri user id's, add boxes(project lists, assignments, task groups), add tasks(box entries), delete boxes, change statuses of box entries.
 
-Project is built using PHP,MYSQL and Twitter Bootstrap Framework.
+The project is built using PHP, MySql and Twitter Bootstrap Framework.
 
-Not much work has been place yet on this, so it's very much a work in progress. If you'd like to help, please do. 
-I'll like to see what we could do together. Simplistic, Minimal and Easy.
+Not much work has been place yet on this, so it's very much a work in progress. If you'd like to help, please do. I'll like to see what we could do together. Simplistic, Minimal and Easy.
+
+PS. I apologize for the Donald Duck image, I needed some form of laughter trigger next to the projects.
 
 The Screenshot
 -----------
