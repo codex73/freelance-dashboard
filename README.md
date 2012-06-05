@@ -27,11 +27,6 @@ Installation
 I've included the db structure in 'db' folder. You could be able to simply publish the folder into your local development enviroment of choice, 
 configure the database "multido.php" [yes, it's still messy and all inside one file] and get the ball rolling.
 
-Things that could make this better:
-
-* A User System -> sign up module.
-* Boards Management -> add boards(projects), rename boards, delete boards.
-* Boards Collaboration -> sharing - permission for other users to boards and/or boxes within.
 
 Usage
 -----------
@@ -53,6 +48,14 @@ How to Contribute
 4. Push to the branch (`git push origin my_youruser`)
 5. Create an [Issue][1] with a link to your branch
 6. Thanks so much, I'll review your creation.
+
+
+Things that could make this better:
+------------
+
+* A User System -> sign up module.
+* Boards Management -> add boards(projects), rename boards, delete boards.
+* Boards Collaboration -> sharing - permission for other users to boards and/or boxes within.
 
 Stuff it Needs
 ------------
