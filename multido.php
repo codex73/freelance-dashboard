@@ -26,29 +26,21 @@ function board_health($prj,$status=1){
 }
 
 function out_boxes($uid,$prj){
-
-  //$query = 'select * from box;';
   $query = "select * from box,box_perm,boards where box_perm.fkuid = '".$uid."' and box.fbid = '".$prj."' ";
   $query .= "and box.id = box_perm.fkbox group by id;";
   $result = mysql_query($query);
-
-  $opened_todos_counter = 0;
-
-  
+  $opened_todos_counter = 0; 
 
   while($row = mysql_fetch_assoc($result)){
 
     $query3 = "select status from box_cont where fkid = '".$row['id']."' and status='1';";
     $result3 = mysql_query($query3);
     $opened_todos = mysql_num_rows($result3);
-
     if($opened_todos==0){$color = 'style="color: #ccc;"';}else{$color = '';}
 
     //Find Box Containers
     $rname = $row['rname'];
-    $id = $row['id'];
-
-    
+    $id = $row['id']; 
 
     $html = <<<YIU
       <table class="table table-bordered span3" $color>
@@ -112,14 +104,9 @@ $end_table = <<<OOO
 </tbody>
 </table>
 OOO;
-
-
     echo $end_table;
-
   }
-
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
