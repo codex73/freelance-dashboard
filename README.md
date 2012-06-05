@@ -58,6 +58,7 @@ How to Contribute
 Stuff it Needs
 ------------
 
+* Separation of code [js css php]
 * Ability to rename box names.
 * Ability to rename board names.
 * Update open tasks count on DOM change.
