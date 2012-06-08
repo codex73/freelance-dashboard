@@ -1,5 +1,8 @@
 <?php
 session_start();
+if(isset($_SESSION['logon'])){
+  header("Location: multido.php?uid=".$_SESSION['uid']);
+}
 ?>
 <!doctype html>
 <html lang="en">
@@ -38,27 +41,29 @@ session_start();
 
   </head>
 <body>
-  	<div class="container">
+  	<div class="row">
+      <div class="offset2 span8 offset2" style="text-align: center;height: 50px">
+        <h1>Freelance Dashboard</h1>
+      </div>
+    </div>    
+    <div class="container">
   		<div class="row">
   			<div class="offset2 span8">
   				<form class="form-horizontal" id="authen">
-				  <fieldset>
-				    <legend>Logon</legend>
+				  <fieldset>				    
 				    <div class="control-group">
-				      <label class="control-label" for="input01">Username/Email</label>
+				      <label class="control-label" for="input01">Username</label>
 				      <div class="controls">
-				        <input name="username" type="text" class="input-xlarge" id="input01">
+				        <input name="username" type="text" class="input-medium" id="input01">
 				      </div>
 				    </div>
 				    <div class="control-group">
 				      <label class="control-label" for="input02">Password</label>
 				      <div class="controls">
-				        <input name="password" type="password" class="input-xlarge" id="input02">				        
-				      </div>
+				        <input name="password" type="password" class="input-medium" id="input02"><br/><br/>			        
+				        <button type="submit" class="btn-large btn-primary">Click to Login</button>
+              </div>
 				    </div>
-				    <div class="form-actions">
-			            <button type="submit" class="btn btn-primary">Login</button>
-			          </div>
 				  </fieldset>
 				</form>
   			</div>  			
@@ -103,7 +108,7 @@ $(function () {
           success: function(data){
             var username = data[0], password = data[1], access = data[2], uid = data[3];
             if(access==false){$(".control-group").addClass('error');}else{
-              window.location = "multido.php?uid="+uid;
+              window.location = "multido.php?uid="+uid+"&prj=1";
             }
             console.log(data);
           }
