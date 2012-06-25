@@ -1,6 +1,6 @@
 <?php
 session_start();
-if(isset($_SESSION['logon'])){
+if(isset($_SESSION['logon'])&&$_SESSION['logon']==true){
   header("Location: multido.php?uid=".$_SESSION['uid']);
 }
 ?>

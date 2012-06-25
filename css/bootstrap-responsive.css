@@ -156,7 +156,7 @@
   .row-fluid > [class*="span"] {
     float: none;
     display: block;
-    background: #DDD;
+    background: ;
     width: auto;
     margin: 0;
   }

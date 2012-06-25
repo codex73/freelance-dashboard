@@ -5,9 +5,6 @@
  * @author Francis Suarez [@codex73]
  */
 session_start();
-
-print_r($_SESSION);
-
 if(!$_SESSION['logon']==true){
   header("Location: logon.php");
 }
@@ -147,7 +144,7 @@ OOO;
 
 
       body {
-        margin-top: 30px;
+        margin-top: 10px;
         padding-bottom: 40px;
       }
 
@@ -237,46 +234,13 @@ OOO;
     <br/>
     <div class="container-fluid">
         <div class="row">          
-          <div class="span12">
-            <ul class="nav nav-pills">
-              <li class="active"><a href="#" data-bitly-type="bitly_hover_card">Regular link</a></li>
-                <li class="dropdown">
-                  <a class="dropdown-toggle" data-toggle="dropdown" href="#" data-bitly-type="bitly_hover_card">Dropdown <b class="caret"></b></a>
-                  <ul id="menu1" class="dropdown-menu">
-                    <li><a href="#" data-bitly-type="bitly_hover_card">Action</a></li>
-                    <li><a href="#" data-bitly-type="bitly_hover_card">Another action</a></li>
-                    <li><a href="#" data-bitly-type="bitly_hover_card">Something else here</a></li>
-                    <li class="divider"></li>
-                    <li><a href="#" data-bitly-type="bitly_hover_card">Separated link</a></li>
-                  </ul>
-                </li>
-                <li class="dropdown">
-                  <a class="dropdown-toggle" data-toggle="dropdown" href="#" data-bitly-type="bitly_hover_card">Dropdown 2 <b class="caret"></b></a>
-                  <ul id="menu2" class="dropdown-menu">
-                    <li><a href="#" data-bitly-type="bitly_hover_card">Action</a></li>
-                    <li><a href="#" data-bitly-type="bitly_hover_card">Another action</a></li>
-                    <li><a href="#" data-bitly-type="bitly_hover_card">Something else here</a></li>
-                    <li class="divider"></li>
-                    <li><a href="#" data-bitly-type="bitly_hover_card">Separated link</a></li>
-                  </ul>
-                </li>
-                <li class="dropdown">
-                  <a class="dropdown-toggle" data-toggle="dropdown" href="#" data-bitly-type="bitly_hover_card">Dropdown 3 <b class="caret"></b></a>
-                  <ul id="menu3" class="dropdown-menu">
-                    <li><a href="#" data-bitly-type="bitly_hover_card">Action</a></li>
-                    <li><a href="#" data-bitly-type="bitly_hover_card">Another action</a></li>
-                    <li><a href="#" data-bitly-type="bitly_hover_card">Something else here</a></li>
-                    <li class="divider"></li>
-                    <li><a href="#" data-bitly-type="bitly_hover_card">Separated link</a></li>
-                  </ul>
-                </li>
-              </ul>
+          <div class="span12">            
+            <h1>Freelance Dashboard</h1>
+            
           </div>
         </div>
         <div class="row-fluid">
-          <div class="span2" style="">
-            <img src="img/donald.png" alt="">
-            <hr>
+          <div class="span2">
             <h1 class="bigger"><?= board_health($prj); ?></h1>
             <hr>
             <!-- Add links to the boards here -->
@@ -290,9 +254,7 @@ OOO;
             <a href="auth.php?logoff=true" class="btn btn-mini" style="margin-bottom:3px;">Log Off</a><br/>
           </div>        
           <div class="span10" id="board_content">
-            <div class="topper" style="background-color: white;">
-              <h1>Freelance Dashboard</h1>
-            </div>
+            <br/>
             <h3 style="margin-left: 20px;"><?php echo $_SESSION['bname']; ?></h3>
             <br/>
             <?php out_boxes($uid,$prj); ?>
