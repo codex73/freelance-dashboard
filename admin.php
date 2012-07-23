@@ -18,123 +18,32 @@ $uid = isset($_GET['uid'])? $_GET['uid'] : '';
 //BoardID
 $prj = isset($_GET['prj'])? $_GET['prj'] : '';
 
-//Board Name
-$thequery = mysql_query("select bname from boards where bid = '".$prj."';");
-$thequery_rst = @mysql_result($thequery,0);
-$_SESSION['bname'] = (empty($thequery_rst) ? 'select a board from menu...' : $thequery_rst);
 
-//Displays Big Number Count - Tasks on Board Still Active
-function board_health($prj,$status=1){
-  $query = "select box.rname,count(box_cont.cid) from box join box_cont on box.id = box_cont.fkid and box.fbid = '".$prj."' and box_cont.status = '".$status."' group by box.id;";
+//Fetches Members
+function fetch_members(){
+  $query = "select * from members";
   $result = mysql_query($query);
-  $the_count = null;
-  while($row = mysql_fetch_array($result)){
-    $the_count = $the_count + $row[1];
+  while($row = mysql_fetch_assoc($result)){
+    echo $row['uname'].'<br/>';
   }
-  if($the_count==0){$the_count = 0;}
-  return $the_count;
 }
 
-//Fetches Boards Names & ID's for Menu
+function fetch_boxes(){
+  $query = "select * from box";
+  $result = mysql_query($query);
+  while($row = mysql_fetch_assoc($result)){
+    echo $row['rname'].'<br/>';
+  }
+}
+
 function fetch_boards(){
   $query = "select * from boards where status = 1";
   $result = mysql_query($query);
   while($row = mysql_fetch_assoc($result)){
-    echo '<a href="?uid=1&prj='.$row['bid'].'">'.$row['bname'].'</a><br/>';
+    echo $row['bname'].'<br/>';
   }
 }
 
-//Fetches Notes
-function fetch_notes($bid){
-  $query = "select notes from boards where bid = '".$bid."';";
-  $result = mysql_query($query);
-  while($row = mysql_fetch_assoc($result)){
-    echo (empty($row['notes'])?'add some notes':$row['notes']);
-  }
-}
-
-function out_boxes($uid,$prj){
-  $query = "select * from box,box_perm,boards where box_perm.fkuid = '".$uid."' and box.fbid = '".$prj."' ";
-  $query .= "and box.id = box_perm.fkbox group by id;";
-  $result = mysql_query($query);
-  $opened_todos_counter = 0; 
-
-  while($row = mysql_fetch_assoc($result)){
-
-    $query3 = "select status from box_cont where fkid = '".$row['id']."' and status='1';";
-    $result3 = mysql_query($query3);
-    $opened_todos = mysql_num_rows($result3);
-    if($opened_todos==0){$color = 'style="color: #ccc;"';}else{$color = '';}
-
-    //Find Box Containers
-    $rname = $row['rname'];
-    $id = $row['id']; 
-
-    $html = <<<YIU
-      <table class="table table-bordered span3" $color>
-            <thead>
-              <tr>
-                <th id="bid_$id">$rname</th>           
-              </tr>
-            </thead>
-            <tbody>
-YIU;
-
-    echo $html;
-
-    //Find Tasks for Each
-    
-    $query2 = "select * from box_cont where fkid = '".$id."';";
-    $result2 = mysql_query($query2);
-
-    if(mysql_num_rows($result2)>0){
-
-      while($row = mysql_fetch_assoc($result2)){
-        $cname = $row['cname'];
-        $cid = $row['cid'];
-        $status = $row['status']; 
-
-        if($status==1){
-          $cont = '<!--<i class="icon-eye-open"></i>-->'.$cname;
-        }else{
-          $cont = '<del style="color: #ccc"> '.$cname.'</del>';
-        }
-
-        $html = <<<YIU
-        <tr>
-                  <td class="box_cont tk" id="cid_$cid">$cont</td>
-                </tr>
-YIU;
-
-        echo $html;
-      }
-
-    }else{
-
-      $html = <<<YIU
-        <tr>
-                  <td class="box_cont_empty">-no entry exists-</td>
-                </tr>
-YIU;
-
-      echo $html;
-
-    }
-    
-
-$end_table = <<<OOO
-<tr class="end_table">
-<td>
-<i class="icon-plus" style="cursor: pointer;opacity: 0.3;margin: 5px;"></i>
-<i class="icon-trash rem_box" style="cursor: pointer;opacity: 0.3;margin: 5px;"></i>
-</td>
-</tr>
-</tbody>
-</table>
-OOO;
-    echo $end_table;
-  }
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -249,10 +158,10 @@ OOO;
         </div>
         <div class="row-fluid">
           <div class="span2">
-            <h1 class="bigger"><?= board_health($prj); ?></h1>
+            <h1 class="bigger"></h1>
             <hr>
             <!-- Add links to the boards here -->
-            <?php fetch_boards(); ?>
+            
             <hr>
             <a href="#" id="trigger_add" class="btn btn-mini" style="margin-bottom:3px;">Add Box</a><br/>
             <a href="#" id="trigger_add_box" class="btn btn-mini" style="margin-bottom:3px;">Add Board</a><br/>
@@ -261,29 +170,20 @@ OOO;
             <a href="?uid=1&prj=3" class="btn btn-mini" style="margin-bottom:3px;">Permissions</a><br/>
             <a href="auth.php?logoff=true" class="btn btn-mini" style="margin-bottom:3px;">Log Off</a><br/>
           </div>        
-          <div class="span6" id="board_content">
+          <div class="span10" id="board_content">
             <br/>
-            <h3 style="margin-left: 20px;">PROJECT | <?php echo $_SESSION['bname']; ?></h3>
+            <h3 style="margin-left: 20px;"><?php echo $_SESSION['bname']; ?></h3>
             <br/>
-            <?php out_boxes($uid,$prj); ?>
-          </div>
-          <div class="span4">
-            <table class="table span4" style="margin-top: 63px;">
-              <thead>
-                <tr>
-                  <th>NOTES</th>           
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>
-                    <p id="notes" rows="10"><?php fetch_notes($prj); ?></p>
-                    <p style="text-align: right;color: #999;display: none;" id="notes_save"><a class="btn" href="">Save</a></p>
-                  </td>                  
-                </tr>
-              </tbody>
-            </table>            
-          </div>
+            <strong>Members</strong><br/>
+            <?php fetch_members(); ?>
+            <br/>
+            <strong>Boxes</strong><br/>
+            <?php fetch_boxes(); ?>
+            <br/>
+            <strong>Boxes</strong><br/>
+            <?php fetch_boards(); ?>
+
+          </div>          
         </div>      
     </div> <!-- /container -->
 
@@ -320,66 +220,7 @@ $(function(){
   '<div id="overlay"></div><div id="formed">'+
   '<h2>Give the board a name</h2>'+
   '<input type="text" name="new_board" style="width:80%" style="float: right;"> '+
-  '<button class="btn add_con" style="float: right;">Save</button></div>';
-
-  //Notes
-
-  $("body").on('click','#notes',function(){    
-
-    if(!$(this).hasClass('editing')){
-
-      $("#notes_save").toggle();
-
-      $(this).addClass('editing');
-
-      var attrs = { };
-
-      $.each($("#notes")[0].attributes, function(idx, attr) {
-          attrs[attr.nodeName] = attr.nodeValue;
-      });
-
-
-      $("#notes").replaceWith(function () {
-          return $("<textarea />", attrs).append($(this).text());
-      });
-
-    }
-
-  });
-
-  //Notes Save
-  $("body").on('click','#notes_save',function(){
-    $("#notes_save").toggle();    
-
-    var content = $(this).prev('textarea').val();
-    var bid = prj;
-
-    $.ajax({
-          type:'post',
-          url: 'posts_in.php',
-          dataType: "json",
-          data: {bid : bid, action: 'update_notes', content: content},
-          success: function(data){
-              var new_content = data[2];
-
-              $("#notes").html(new_content);
-              $("#notes").removeClass('editing');
-          }
-      });
-
-    //hide the text area
-    var attrs = { };
-
-    $.each($("#notes")[0].attributes, function(idx, attr) {
-        attrs[attr.nodeName] = attr.nodeValue;
-    });
-
-
-    $("#notes").replaceWith(function () {
-        return $("<p />", attrs).append($(this).contents());
-    });  
-
-  });
+  '<button class="btn add_con" style="float: right;">Save</button></div>';  
 
   //Add Box
   $("#trigger_add").on('click',function(event){

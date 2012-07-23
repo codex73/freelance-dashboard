@@ -108,7 +108,7 @@ $(function () {
           success: function(data){
             var username = data[0], password = data[1], access = data[2], uid = data[3];
             if(access==false){$(".control-group").addClass('error');}else{
-              window.location = "multido.php?uid="+uid+"&prj=1";
+              window.location = "multido.php?uid="+uid;
             }
             console.log(data);
           }

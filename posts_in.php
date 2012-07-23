@@ -21,14 +21,14 @@ $action = trim(strip_tags($_POST['action']));
 $cid = trim(strip_tags($_POST['cid']));
 $bid = trim(strip_tags($_POST['bid']));
 $altstatus = trim(strip_tags($_POST['altstatus'])); 
-$content = trim(strip_tags($_POST['content'])); 
+$content = trim(nl2br($_POST['content'])); 
 $prj = trim(strip_tags($_POST['prj']));
 $uid = trim(strip_tags($_POST['uid']));
 $typerec = trim(strip_tags($_POST['typerec']));
 
 //New Board
 if($action=='new_asset'&&$typerec=='new_board'){
-	$query = "INSERT INTO boards (bid,bname) values (null,'".$content."');";
+	$query = "INSERT INTO boards (bid,bname,status) values (null,'".$content."',1);";
 	$result = mysql_query($query);
 	$cid = mysql_insert_id();
 }
@@ -52,6 +52,12 @@ if($action=='new_tk'){
 //Update Status of Item
 if($action=='status_up'){
 	$query = "UPDATE box_cont SET status = '".$altstatus."' where cid = '".$cid."';";
+	$result = mysql_query($query);
+}
+
+//Update Board Notes
+if($action=='update_notes'){
+	$query = "UPDATE boards SET notes = '".$content."' where bid = '".$bid."';";
 	$result = mysql_query($query);
 }
 
