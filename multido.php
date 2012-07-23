@@ -5,6 +5,7 @@
  * @author Francis Suarez [@codex73]
  */
 session_start();
+
 if(!$_SESSION['logon']==true){
   header("Location: logon.php");
 }
@@ -18,7 +19,7 @@ $uid = isset($_GET['uid'])? $_GET['uid'] : '';
 //BoardID
 $prj = isset($_GET['prj'])? $_GET['prj'] : '';
 
-//Board Name
+//Board Names
 $thequery = mysql_query("select bname from boards where bid = '".$prj."';");
 $thequery_rst = @mysql_result($thequery,0);
 $_SESSION['bname'] = (empty($thequery_rst) ? 'select a board from menu...' : $thequery_rst);
