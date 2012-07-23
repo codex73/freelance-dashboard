@@ -3,7 +3,7 @@
 # Server version:               5.5.20-log
 # Server OS:                    Win64
 # HeidiSQL version:             6.0.0.3603
-# Date/time:                    2012-06-04 19:09:27
+# Date/time:                    2012-07-22 22:20:16
 # --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -20,6 +20,8 @@ USE `multido`;
 CREATE TABLE IF NOT EXISTS `boards` (
   `bid` int(10) NOT NULL AUTO_INCREMENT,
   `bname` varchar(40) DEFAULT NULL,
+  `status` tinyint(1) DEFAULT NULL,
+  `notes` text,
   PRIMARY KEY (`bid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -66,6 +68,9 @@ CREATE TABLE IF NOT EXISTS `box_perm` (
 CREATE TABLE IF NOT EXISTS `members` (
   `uid` int(10) NOT NULL AUTO_INCREMENT,
   `uname` varchar(50) NOT NULL,
+  `password` varchar(20) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `secret_` varchar(100) NOT NULL,
   PRIMARY KEY (`uid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
