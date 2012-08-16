@@ -136,6 +136,8 @@ OOO;
     echo $end_table;
   }
 }
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -335,12 +337,12 @@ $(function(){
 
       var attrs = { };
 
-      $.each($("#notes")[0].attributes, function(idx, attr) {
+      $.each($(this)[0].attributes, function(idx, attr) {
           attrs[attr.nodeName] = attr.nodeValue;
       });
 
 
-      $("#notes").replaceWith(function () {
+      $(this).replaceWith(function () {
           return $("<textarea />", attrs).append($(this).text());
       });
 
@@ -363,20 +365,20 @@ $(function(){
           success: function(data){
               var new_content = data[2];
 
-              $("#notes").html(new_content);
-              $("#notes").removeClass('editing');
+              $(this).html(new_content);
+              $(this).removeClass('editing');
           }
       });
 
     //hide the text area
     var attrs = { };
 
-    $.each($("#notes")[0].attributes, function(idx, attr) {
+    $.each($(this)[0].attributes, function(idx, attr) {
         attrs[attr.nodeName] = attr.nodeValue;
     });
 
 
-    $("#notes").replaceWith(function () {
+    $(this).replaceWith(function () {
         return $("<p />", attrs).append($(this).contents());
     });  
 
